@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Tyson Brown</Authors>
+    <Company>UtilityDelta</Company>
+    <Description>Uses fswebcam and compare (ImageMagick) to take pictures from webcams and score image differences</Description>
+    <Copyright>Tyson Brown</Copyright>
+    <PackageLicenseUrl>https://github.com/utilitydelta-io/dotnet-linux-imagediff/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/utilitydelta-io/dotnet-linux-imagediff</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/utilitydelta-io/dotnet-linux-imagediff</RepositoryUrl>
+    <PackageIconUrl>https://github.com/utilitydelta-io/dotnet-linux-imagediff/raw/master/UtilityDelta.Bash/icons8-webcam-40.png</PackageIconUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UtilityDelta.Bash" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>
