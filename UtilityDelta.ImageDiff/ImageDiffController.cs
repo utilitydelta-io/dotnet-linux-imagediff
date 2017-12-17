@@ -23,14 +23,14 @@ namespace UtilityDelta.ImageDiff
         {
             try
             {
-                Parallel.For(0, cameras.Length, (i) =>
+                for (var i = 0; i < cameras.Length; i++)
                 {
                     var command = $"fswebcam -d /dev/video{cameras[i]} {FsWebCamParams} {BaselineImage(cameras[i])}";
                     var process = _bashRunner.RunCommand(
                         command,
-                        Environment.CurrentDirectory, true, FsWebCamTimeout, FsWebCamRetrys);
+                        Environment.CurrentDirectory, true, null, FsWebCamRetrys);
                     if (process.ExitCode != 0) throw new ExceptionNoFsWebCam($"Could not take base images with fswebcam. Command: {command}");
-                });
+                };
             }
             catch (AggregateException ae)
             {
@@ -43,22 +43,21 @@ namespace UtilityDelta.ImageDiff
             var compareResults = new Double[cameras.Length];
             try
             {
-                Parallel.For(0, cameras.Length, (i) =>
+                for (var i = 0; i < cameras.Length; i++)
                 {
                     var fswebcamCommand = $"fswebcam -d /dev/video{cameras[i]} {FsWebCamParams} {DiffImage(cameras[i])}";
                     var processTakeImage = _bashRunner.RunCommand(
                         fswebcamCommand,
-                        Environment.CurrentDirectory, true, FsWebCamTimeout, FsWebCamRetrys);
+                        Environment.CurrentDirectory, true, null, FsWebCamRetrys);
                     if (processTakeImage.ExitCode != 0) throw new ExceptionNoFsWebCam($"Could not take diff images with fswebcam. Command: {fswebcamCommand}");
 
                     var compareCommand = $"compare -fuzz 5% -metric AE {BaselineImage(cameras[i])} {DiffImage(cameras[i])} diffresult{cameras[i]}.jpg";
                     var processDiff = _bashRunner.RunCommand(
                         compareCommand,
-                        Environment.CurrentDirectory, true, 500, null);
-                    if (processDiff.ExitCode != 0) throw new ExceptionNoCompare($"Could not perform image diff with ImageMagick compare. Command: {compareCommand}");
-
-                    compareResults[i] = Convert.ToDouble(processDiff.StandardOutput.ReadToEnd());
-                });
+                        Environment.CurrentDirectory, true, null, null);
+                    //HACK: This call comes out as an error, but actually its ok
+                    compareResults[i] = Convert.ToDouble(processDiff.StandardError.ReadToEnd());
+                }
             }
             catch (AggregateException ae)
             {

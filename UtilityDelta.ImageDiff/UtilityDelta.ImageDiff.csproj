@@ -12,6 +12,7 @@
     <PackageIconUrl>https://github.com/utilitydelta-io/dotnet-linux-imagediff/raw/master/UtilityDelta.Bash/icons8-webcam-40.png</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.7.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
