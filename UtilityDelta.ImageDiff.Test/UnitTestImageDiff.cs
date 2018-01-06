@@ -40,7 +40,7 @@ namespace UtilityDelta.ImageDiff.Test
         {
             var process = ProcessObj("3.55");
             var process2 = ProcessObj("3.99");
-
+            
             var mockBash = new Mock<IBashRunner>();
             mockBash.Setup(x => x.RunCommand(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<int?>(),
                 It.IsAny<int?>())).Returns(new Mock<ProcessWrapper>().Object);
@@ -62,7 +62,7 @@ namespace UtilityDelta.ImageDiff.Test
             var intbytes = System.Text.Encoding.UTF8.GetBytes(value);
             mem.Write(intbytes, 0, intbytes.Length);
             mem.Position = 0;
-            process.Setup(x => x.StandardOutput).Returns(new StreamReader(mem));
+            process.Setup(x => x.StandardError).Returns(new StreamReader(mem));
             process.Setup(x => x.ExitCode).Returns(0);
             return process;
         }
